@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE changeSet >
+<changeSet author="CHANGEME" id="CHANGEME">
+<createTable tableName="Table_Exemple">
+  <column name="Ex_Id" type="BIGINT" autoIncrement="true">
+    <constraints primaryKey="true" constraintName="Table_Exemple_pk" nullable="false"/>
+  </column>
+  <column name="isEmpty" type="BOOLEAN" remarks="DO_OUI_NON">
+    <constraints nullable="false"/>
+  </column>
+  <column name="Prix" type="NUMERIC(15,2)">
+    <constraints nullable="false"/>
+  </column>
+</createTable>
+<createSequence sequenceName="Table_Exemple_Ex_Id_seq"/>
+
+<createTable tableName="Exemple">
+  <column name="Tex_Id" type="BIGINT" autoIncrement="true">
+    <constraints primaryKey="true" constraintName="Exemple_pk" nullable="false"/>
+  </column>
+  <column name="Ex_Id" type="BIGINT">
+    <constraints nullable="false"/>
+  </column>
+</createTable>
+<createSequence sequenceName="Exemple_Tex_Id_seq"/>
+
+<createTable tableName="Test">
+  <column name="Test_id" type="BIGINT" autoIncrement="true">
+    <constraints primaryKey="true" constraintName="Test_pk" nullable="false"/>
+  </column>
+  <column name="Commentaire" type="VARCHAR(0)">
+    <constraints nullable="false"/>
+  </column>
+</createTable>
+<createSequence sequenceName="Test_Test_id_seq"/>
+
+<createTable tableName="Addition">
+  <column name="Add_Id" type="BIGINT">
+    <constraints primaryKey="true" constraintName="Addition_pk" nullable="false"/>
+  </column>
+  <column name="Test_id" type="BIGINT" remarks="DO_IDENTIFIANT">
+    <constraints nullable="false"/>
+  </column>
+</createTable>
+
+<addForeignKeyConstraint baseTableName="Exemple" constraintName="Table_Exemple_Exemple_fk" baseColumnNames="Ex_Id" referencedTableName="Table_Exemple" referencedColumnNames="Ex_Id"/>
+
+<addForeignKeyConstraint baseTableName="Addition" constraintName="Test_Addition_fk" baseColumnNames="Add_Id" referencedTableName="Test" referencedColumnNames="Test_id" onDelete="RESTRICT" onUpdate="RESTRICT"/>
+</changeSet>

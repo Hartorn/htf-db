@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project name="htf-generation">
+	<description>
+		Buildfile used to generate and compile projects with the HTF Framework
+	</description>
+	<!-- ${ant} and ${src} already defined in pom.xml -->
+
+	<!-- Defining src structure -->
+	<property name="src.javagen" location="${src}/main/javagen" />
+	<property name="src.javagen.object.abstract" location="${src.javagen}/abstract" />
+	<property name="src.javagen.object.impl" location="${src.javagen}/impl" />
+	<!-- Defining the templates directory -->
+	<property name="templates" location="${ant}/templates" />
+
+	<!-- define the dependencies -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml" />
+	<taskdef name="fmpp" classname="fmpp.tools.AntTask" />
+
+	<target name="init" description="create the directory structure if necessary">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the src.cppgen directory structure used by generate -->
+		<mkdir dir="${src.javagen.object.abstract}" />
+		<mkdir dir="${src.javagen.object.impl}" />
+	</target>
+	<target name="cleanGeneration" description="Clean up the generated sources files">
+		<!-- Delete the ${src.cppgen.object.abstract} directory tree -->
+		<delete dir="${src.javagen.object.abstract}" />
+	</target>
+
+	<target name="generate" depends="init,cleanGeneration">
+		<fmpp sourceRoot="${templates}" outputRoot="${src.javagen}" data="model:xml(${database.model.xmlmodel}),dbMapping:properties(${database.model.mapping})">
+			<include name="classTemplate.ftl" />
+		</fmpp>
+	</target>
+
+</project>
