@@ -1,0 +1,63 @@
+<pluginMetadata>
+	<mojos>
+		<mojo>
+<!-- 			<goal>generate</goal> -->
+			<!-- this element refers to the Ant target we'll invoke -->
+<!-- 			<call>generate</call> -->
+			<requiresProject>true</requiresProject>
+			<description>
+				Generate files from database model in xml.
+				Say Hello,
+				World.
+			</description>
+			<parameters>
+				<parameter>
+					<!-- <name>src.db.javagen</name> -->
+					<property>javagen.package</property>
+					<required>true</required>
+					<expression>${javagen.package}</expression>
+					<type>java.lang.String</type>
+					<description>The base package for the generated files.
+					</description>
+				</parameter>
+
+				<parameter>
+					<!-- <name>projectName</name> -->
+					<property>db.name</property>
+					<required>true</required>
+					<expression>${db.name}</expression>
+					<!-- <readonly>true</readonly> -->
+					<!-- <defaultValue>${project.name}</defaultValue> -->
+					<type>java.lang.String</type>
+					<description>The name of the database we are generating for.
+					</description>
+				</parameter>
+
+				<parameter>
+					<!-- <name>projectName</name> -->
+					<property>db.model.xmlfile</property>
+					<required>true</required>
+					<expression>${db.model.xmlfile}</expression>
+					<!-- <readonly>true</readonly> -->
+					<!-- <defaultValue>${project.name}</defaultValue> -->
+					<type>java.lang.String</type>
+					<description>The xml file representing the database.
+					</description>
+				</parameter>
+
+				<parameter>
+					<!-- <name>projectName</name> -->
+					<property>src</property>
+					<required>true</required>
+					<expression>${src}</expression>
+					<!-- <readonly>true</readonly> -->
+					<defaultValue>${basedir}/src</defaultValue>
+					<type>java.lang.String</type>
+					<description>The path for src folder.</description>
+				</parameter>
+				
+				
+			</parameters>
+		</mojo>
+	</mojos>
+</pluginMetadata>

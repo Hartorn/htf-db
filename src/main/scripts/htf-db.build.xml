@@ -6,8 +6,8 @@
 	</description>
 	<!-- ${ant} and ${src} already defined in pom.xml -->
 	<!-- define the dependencies -->
-	<!-- <echo message="plugin classpath:${db.model.xmlfile}"/> -->
-	<!-- <echo message="plugin classpath:${db.name}"/> -->
+	<echo message="plugin classpath:${db.model.xmlfile}"/>
+	<echo message="plugin classpath:${db.name}"/>
 <!-- 	<echo message="plugin classpath:${antcontrib.path}" /> -->
 <!-- 	<echo message="plugin classpath:${fmpp.path}" /> -->
 

@@ -2,12 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.hartorn</groupId>
-	<artifactId>htf-db</artifactId>
+	<artifactId>htf-db-maven-plugin</artifactId>
 	<name>Hartorn's Framework (Database)</name>
 	<url>https://github.com/Hartorn/htf-db</url>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>maven-plugin</packaging>
 
 	<parent>
 		<groupId>com.github.hartorn</groupId>
@@ -16,57 +14,120 @@
 	</parent>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<!-- Maven Ant Run : task used for generating source -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>generate-sources</id>
-							<phase>generate-sources</phase>
-							<configuration>
-								<target>
-									<!-- defining ant structure -->
-									<property name="ant" location="${basedir}/ant" />
-									<!-- Defining src structure -->
-									<property name="src" location="${basedir}/src" />
-									<!-- defining the database-related properties -->
-									<property name="database.name" value="postgresql" />
-									<property name="database.model" location="${basedir}/dbModel" />
-									<property name="database.model.xmlmodel" location="${database.model}/test.xml" />
-									<property name="database.model.mapping"
-										location="${database.model}/mapping/${database.name}.properties" />
+		<plugins>
+			<!-- Maven Ant Run : task used for generating source -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<goals>
+					<goal>generate</goal>
+				</goals>
+				<!-- <executions> -->
+				<!-- <execution> -->
+				<!-- <id>generate-sources</id> -->
+				<!-- <phase>generate-sources</phase> -->
+				<configuration>
+					<target>
+						<!-- defining ant structure -->
+						<property name="ant" location="${basedir}/ant" />
+						<!-- Defining src structure -->
+						<property name="src" location="${basedir}/src" />
+						<!-- defining the database-related properties -->
+						<property name="database.name" value="postgresql" />
+						<property name="database.model" location="${basedir}/dbModel" />
+						<property name="database.model.xmlmodel" location="${database.model}/test.xml" />
+						<property name="database.model.mapping"
+							location="${database.model}/mapping/${database.name}.properties" />
 
-									<ant antfile="${ant}/build.xml">
-										<target name="generate" />
-									</ant>
-								</target>
-							</configuration>
-							<goals>
-								<goal>run</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<!-- Maven Compiler : task used for compiling java classes -->
+						<ant antfile="${ant}/build.xml">
+							<target name="generate" />
+						</ant>
+					</target>
+				</configuration>
+				<!-- <goals> -->
+				<!-- <goal>run</goal> -->
+				<!-- </goals> -->
+				<!-- </execution> -->
+				<!-- </executions> -->
+			</plugin>
+			<!-- Maven Compiler : task used for compiling java classes -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-dependency-plugin</artifactId> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-plugin-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <phase>generate-sources</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>generate</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <plugin_classpath>${maven.plugin.classpath}</plugin_classpath> -->
+			<!-- <property name="plugin_classpath" refid="maven.plugin.classpath" 
+				/> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <phase>generate-sources</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>generate</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+			<!-- </plugin> -->
+		</plugins>
 	</build>
+
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>2.0</version>
 		</dependency>
+
+		<!-- dependencies to annotations -->
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>3.4</version>
+			<scope>provided</scope>
 		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.maven.plugin-tools</groupId> -->
+		<!-- <artifactId>maven-script-ant</artifactId> -->
+		<!-- </dependency> -->
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.maven.plugins</groupId> -->
+		<!-- <artifactId>maven-dependency-plugin</artifactId> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.maven.plugin-tools</groupId> -->
+		<!-- <artifactId>maven-plugin-tools-ant</artifactId> -->
+		<!-- <version>3.4</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.ant</groupId> -->
+		<!-- <artifactId>ant</artifactId> -->
+		<!-- <version>1.9.4</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>ant-contrib</groupId> -->
+		<!-- <artifactId>ant-contrib</artifactId> -->
+		<!-- <version>1.0b3</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.googlecode.fmpp-maven-plugin</groupId> -->
+		<!-- <artifactId>fmpp-maven-plugin</artifactId> -->
+		<!-- <version>1.0</version> -->
+		<!-- </dependency> -->
+
+
 	</dependencies>
 </project>
