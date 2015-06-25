@@ -1,9 +1,9 @@
 <pluginMetadata>
 	<mojos>
 		<mojo>
-<!-- 			<goal>generate</goal> -->
-			<!-- this element refers to the Ant target we'll invoke -->
-<!-- 			<call>generate</call> -->
+			<goal>generate</goal>
+<!-- 			this element refers to the Ant target we'll invoke -->
+			<call>generate</call>
 			<requiresProject>true</requiresProject>
 			<description>
 				Generate files from database model in xml.
@@ -56,6 +56,29 @@
 					<description>The path for src folder.</description>
 				</parameter>
 				
+				<parameter>
+					<!-- <name>projectName</name> -->
+					<property>fmpp.path</property>
+					<required>true</required>
+					<expression>${fmpp.path}</expression>
+					<!-- <readonly>true</readonly> -->
+					<defaultValue>RIEN</defaultValue>
+					<type>java.lang.String</type>
+					<description>The path for src folder.</description>
+				</parameter>
+		
+				<parameter>
+					<!-- <name>projectName</name> -->
+					<property>antcontrib.path</property>
+					<required>true</required>
+					<expression>${antcontrib.path}</expression>
+					<!-- <readonly>true</readonly> -->
+					<defaultValue>RIEN</defaultValue>
+					<type>java.lang.String</type>
+					<description>The path for src folder.</description>
+				</parameter>
+		
+		
 				
 			</parameters>
 		</mojo>

@@ -1,40 +1,53 @@
 <?xml version="1.0"?>
-<project name="htf-generation" >
+<project name="htf-generation">
 	<description>
 		Buildfile used to generate and compile projects with the
 		HTF Framework
 	</description>
 	<!-- ${ant} and ${src} already defined in pom.xml -->
 	<!-- define the dependencies -->
-	<echo message="plugin classpath:${db.model.xmlfile}"/>
-	<echo message="plugin classpath:${db.name}"/>
-<!-- 	<echo message="plugin classpath:${antcontrib.path}" /> -->
-<!-- 	<echo message="plugin classpath:${fmpp.path}" /> -->
+	<echo message="plugin classpath:${db.model.xmlfile}" />
+	<echo message="plugin classpath:${db.name}" />
+	<!-- 	<echo message="plugin classpath:${antcontrib.path}" /> -->
+	<!-- 	<echo message="plugin classpath:${fmpp.path}" /> -->
+	<echo message="FMPP Path:${fmpp.path}" />
+	<echo message="AntContrib Path:${antcontrib.path}" />
 
-<!-- 	<property name="fmpp.path.corrected" location="${fmpp.path}" /> -->
-<!-- 	<property name="antcontrib.path.corrected" location="${antcontrib.path}" /> -->
+	<property name="fmpp.path.corrected" location="/${fmpp.path}" />
+	<property name="antcontrib.path.corrected" location="/${antcontrib.path}" />
 
-<!-- 	<echo message="FMPP Path:${fmpp.path.corrected}" /> -->
-<!-- 	<echo message="AntContrib Path:${antcontrib.path.corrected}" /> -->
+	<echo message="FMPP Path:${fmpp.path.corrected}" />
+	<echo message="AntContrib Path:${antcontrib.path.corrected}" />
 
-<!-- classpath="${antcontrib.path.corrected}" -->
-<!-- classpath="${fmpp.path.corrected}" -->
+	<path id="build.path">
+		<pathelement location="${antcontrib.path.corrected}" />
+		<pathelement location="${fmpp.path.corrected}" />
+	</path>
+
+	<!-- classpath="${antcontrib.path.corrected}" -->
+	<!-- classpath="${fmpp.path.corrected}" -->
 	<taskdef resource="net/sf/antcontrib/antlib.xml"  />
-	<taskdef name="fmpp" classname="fmpp.tools.AntTask"  />
-<!-- 	<echo>src.javagen:${javagen.package}</echo> -->
+	<taskdef name="fmpp" classname="fmpp.tools.AntTask" />
+	<echo>src.javagen:${javagen.package}</echo>
 	<!-- Defining db files structure -->
-	<property name="db.model.mapping.folder" location="${ant.file}/dbMapping" />
-	<property name="db.model.mapping.file"
-		location="${db.model.mapping.folder}/${db.name}.properties" />
+	<property name="db.model.mapping.folder" location="${basedir}/dbMapping" />
+	<property name="db.model.mapping.file" location="${db.model.mapping.folder}/${db.name}.properties" />
 	<property name="db.model.xmlfile.corrected" location="${db.model.xmlfile}" />
 	<!-- Defining src structure -->
-	<propertyregex input="${javagen.package}" property="javagen.package.slashed" global="true" regexp="\." replace="/" />
-	<property name="src.javagen"
-		location="${src}/main/javagen/${javagen.package.slashed}" />
+
+	<scriptdef language="javascript" name="slash">
+		<attribute name="input" />
+		<attribute name="to" />
+	    project.setProperty(attributes.get("to"),attributes.get("input").replaceAll("\.","/"));
+	  </scriptdef>
+
+	<slash input="${javagen.package}" to="javagen.package.slashed" />
+
+	<property name="src.javagen" location="${src}/main/javagen/${javagen.package.slashed}" />
 	<property name="src.javagen.abstract" location="${src.javagen}/abstract" />
 	<property name="src.javagen.impl" location="${src.javagen}/impl" />
 	<!-- Defining the templates directory -->
-	<property name="templates" location="${ant.file}/templates" />
+	<property name="templates" location="/templates" />
 	<!-- <property name="templates" location="${ant}/templates" /> -->
 
 
@@ -51,10 +64,8 @@
 		<delete dir="${src.javagen.abstract}" />
 	</target>
 
-	<target name="generate" depends="init,cleanGeneration"
-		description="Generate source files from the database model in xml">
-		<fmpp sourceRoot="${templates}" outputRoot="${src.javagen}"
-			data="model:xml(${db.model.xmlfile.corrected}),dbMapping:properties(${db.model.mapping.file})">
+	<target name="generate" depends="init,cleanGeneration" description="Generate source files from the database model in xml">
+		<fmpp sourceRoot="${templates}" outputRoot="${src.javagen}" data="model:xml(${db.model.xmlfile.corrected}),dbMapping:properties(${db.model.mapping.file})">
 			<include name="classTemplate.ftl" />
 		</fmpp>
 	</target>
